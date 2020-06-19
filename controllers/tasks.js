@@ -32,3 +32,14 @@ module["exports"].delTask = async (req,res,next) => {
         next(e)
     }
 };
+
+module["exports"].editTask = async (req,res,next) => {
+    try {
+        const taskId = req.params.id;
+        const data = {title, text, tag} = req.body;
+        const task = await Task.findByIdAndUpdate(taskId,data, {new:true}).orFail(new NotFoundError('Такой задачи нет'));
+        res.send(task);
+    } catch (e) {
+        next(e)
+    }
+};

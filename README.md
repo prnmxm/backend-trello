@@ -32,4 +32,4 @@ JWT_SECRET = token
 1. POST `/task/` - добавить задачу 
 2. DELETE `/task/:id` - удалить задачу 
 3. GET `/task` - все задачи команды
-
+4. PATCH `/task/:id` - Изменение задачи
