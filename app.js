@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 app.use('/user', userRoutes);
 app.use('/team', teamRoutes);
-app.use('/task', taskRoutes);
+app.use('/tasks', taskRoutes);
 
 app.all('*', (req, res) => res.status(404).json({ message: 'Запрашиваемый ресурс не найден' }));
 app.use(errors());
