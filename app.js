@@ -1,7 +1,7 @@
 const path = require('path');
 require('dotenv').config();
 const { errors } = require('celebrate');
-
+const cors = require('cors');
 const mongoose = require('mongoose'); // Db
 const bodyParser = require('body-parser'); // body parser
 // Server
@@ -27,7 +27,7 @@ db.once('open', () => {
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(cors())
 app.use(cookieParser());
 
 app.use('/user', userRoutes);

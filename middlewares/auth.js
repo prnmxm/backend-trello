@@ -20,7 +20,6 @@ module.exports = (req, res, next) => {
     } catch (e) {
         return handleAuthError(res);
     }
-
     req.user = payload;
     return next();
 };
