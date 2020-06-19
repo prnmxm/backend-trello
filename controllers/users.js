@@ -36,10 +36,13 @@ module["exports"].userAuth = async (req, res, next) => {
         const {login,password} = req.body;
         const user = await User.findUser(login,password);
         if(!user) {
-            throw new Error('Юзер не найден')
+            throw new NotFoundError('Юзер не найден')
         }
-        tokenJwt(res, user._id).send(user.passPrivate());
-    } catch (e) {next(e)}
+        tokenJwt(res, user._id).status(201).send(user);
+    } catch (e) {
+        console.log(e)
+        next(e)
+    }
 };
 module["exports"].getUser = async (req, res, next) => {
     try {

@@ -1,5 +1,5 @@
 const routes = require('express').Router();
-const {create, enter, getTeam} = require('../controllers/teams');
+const {create, enter, getTeam, leave} = require('../controllers/teams');
 const auth = require('../middlewares/auth');
 const team = require('../middlewares/team');
 const { celebrate, Joi } = require('celebrate');
@@ -16,5 +16,5 @@ routes.get('/:id', auth, celebrate({
     })
 }), enter);
 routes.get('/', auth, team, getTeam);
-
+routes.post('/leave', auth, team, leave);
 module.exports = routes;
