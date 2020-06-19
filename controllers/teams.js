@@ -49,6 +49,7 @@ module["exports"].leave = async (req,res,next) => {
             throw new Conflict('Тебе нельзя выйти')
         }
         await team.update({$pull: {members: userId}});
+        await User.findByIdAndUpdate(userId, {$unset:{team: 1}})
         res.send({team})
     } catch (e) {next(e)}
 };
