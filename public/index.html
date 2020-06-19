@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div class="containerAuth">
+    <div class="containerAuth__left">
+        <form class="authForm">
+            <input type="text" name="login">
+            <input type="text" name="password">
+            <button>send</button>
+        </form>
+        <div class="info"></div>
+    </div>
+    <div class="containerAuth__right">
+
+    </div>
+</div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const socket = io.connect('http://localhost');
+    socket.on('news', (data) => {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+    });
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+       e.preventDefault();
+       const form = e.currentTarget;
+       const login = form.login.value;
+       const password = form.password.value;
+       axios.post('/api/auth', {
+           "login": login,
+           "password": password
+       })
+        .then(res => {
+            console.log(res.data)
+            document.querySelector('.info').textContent = `Вошел как ${res.data.message.login}`
+        })
+        .catch(err => {
+            console.log(err.response.data.message)
+            document.querySelector('.info').textContent = err.response.data.message;
+            document.querySelector('.info').style.color = 'red';
+        })
+    });
+</script>
+</html>
